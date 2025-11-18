@@ -487,78 +487,72 @@
         animate();
     }
 
-    // Add hamburger menu functionality - SIMPLIFIED VERSION
+    // Add hamburger menu functionality - FINAL VERSION
     function addHamburgerMenu() {
-        console.log('=== HAMBURGER MENU DEBUG ===');
-        
-        // Wait a bit to ensure DOM is fully loaded
-        setTimeout(() => {
-            const hamburger = document.querySelector('.hamburger');
-            const navMenu = document.querySelector('.nav-menu');
-            
-            console.log('Hamburger element:', hamburger);
-            console.log('Nav menu element:', navMenu);
-            
-            if (!hamburger) {
-                console.error('❌ Hamburger element not found!');
-                return;
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        const subscribeBtn = document.querySelector('.nav-btn');
+
+        if (!hamburger || !navMenu) {
+            console.error('❌ Hamburger or nav menu element not found!');
+            return;
+        }
+
+        function openMenu() {
+            navMenu.classList.add('active');
+            hamburger.classList.add('active');
+            hamburger.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            navMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+        }
+
+        // Toggle menu on hamburger click
+        hamburger.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (navMenu.classList.contains('active')) {
+                closeMenu();
+            } else {
+                openMenu();
             }
-            
-            if (!navMenu) {
-                console.error('❌ Nav menu element not found!');
-                return;
+        });
+
+        // Close menu when clicking nav links
+        const navLinks = document.querySelectorAll('.nav-menu li a');
+        navLinks.forEach((link) => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Prevent closing when clicking inside menu
+        navMenu.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+
+        // Close when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!navMenu.classList.contains('active')) return;
+            if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                closeMenu();
             }
-            
-            console.log('✅ Both elements found!');
-            
-            // Simple click handler
-            hamburger.onclick = function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('🍔 Hamburger clicked!');
-                
-                // Toggle classes
-                navMenu.classList.toggle('active');
-                hamburger.classList.toggle('active');
-                
-                // Check if menu is now active
-                if (navMenu.classList.contains('active')) {
-                    console.log('📱 Menu is now OPEN');
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    console.log('📱 Menu is now CLOSED');
-                    document.body.style.overflow = '';
-                }
-            };
-            
-            // Close menu when clicking nav links
-            const navLinks = document.querySelectorAll('.nav-menu li a');
-            console.log('Found nav links:', navLinks.length);
-            
-            navLinks.forEach((link, index) => {
-                link.onclick = function() {
-                    console.log(`🔗 Nav link ${index + 1} clicked`);
-                    navMenu.classList.remove('active');
-                    hamburger.classList.remove('active');
-                    document.body.style.overflow = '';
-                };
-            });
-            
-            // Close menu when clicking outside
-            document.onclick = function(e) {
-                if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
-                    navMenu.classList.remove('active');
-                    hamburger.classList.remove('active');
-                    document.body.style.overflow = '';
-                }
-            };
-            
-            console.log('✅ Hamburger menu setup complete!');
-        }, 100);
+        });
+
+        if (subscribeBtn) {
+            subscribeBtn.addEventListener('click', closeMenu);
+        }
     }
 
     // Initialize everything
     addCSSAnimations();
     addSkillBarCSS();
     init();
+    addHamburgerMenu();
 })();

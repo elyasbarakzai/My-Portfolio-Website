@@ -20,22 +20,32 @@
 
         <div class="hero">
             <div class="hero-content">
-                <nav>
-                    <h2 class="logo">ELY<span class="span-logo">AS</span></h2>
-                    <ul class="nav-menu">
-                        <li><a href="#content">Home</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#service">Services</a></li>
-                        <li><a href="#skills_section">Skills</a></li>
-                        <li><a href="#contact-me">Contact Us</a></li>
-                        <li><a href="https://www.instagram.com/elyasbarakzai1" target="_blank" class="btn">Subscribe</a>
-                        </li>
-                    </ul>
+                <nav class="navbar" aria-label="Primary navigation">
+                    <div class="nav-left">
+                            <img src="./images/self-logo.png" class="logo" alt="Elyas-self-Logo">
+                    </div>
 
-                    <div class="hamburger">
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                        <span class="bar"></span>
+                    <div class="nav-center">
+                        <ul id="primary-navigation" class="nav-menu" role="menubar">
+                            <li role="none"><a role="menuitem" href="#content">Home</a></li>
+                            <li role="none"><a role="menuitem" href="#about">About Us</a></li>
+                            <li role="none"><a role="menuitem" href="#service">Services</a></li>
+                            <li role="none"><a role="menuitem" href="#skills_section">Skills</a></li>
+                            <li role="none"><a role="menuitem" href="#contact-me">Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-actions nav-right">
+                        <a href="https://www.youtube.com/@elyasbarakzai1" target="_blank" class="btn nav-btn">
+                            Subscribe
+                        </a>
+
+                        <button class="hamburger" type="button" aria-label="Toggle navigation"
+                            aria-controls="primary-navigation" aria-expanded="false">
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                        </button>
                     </div>
                 </nav>
             </div>
@@ -241,9 +251,9 @@
             <p>For more Html, Css and coding tutorial - Please Click on the link below to
                 Subscribe to my channel.</p>
             <div class="social">
-                <a href="https://www.instagram.com/elyas/barak01" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.instagram.com/elyasbarakzai1" target="_blank"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.youtube.com/channel/UCQo9p4vAIEO2lSzIU_Bi1Rg" target="_blank"><i
-                        class="fab fa-youtube"></i></a>
+                        class="fab fa-github"></i></a>
                 <a href="https://www.gmail.com"><i class="fa-solid fa-envelope" target="_blank"></i></a>
             </div>
             <br>
@@ -255,70 +265,6 @@
 
     </div>
     <script src="script.js"></script>
-
-    <!-- Simple Hamburger Menu Script -->
-    <script>
-
-        document.addEventListener('DOMContentLoaded', function () {
-            console.log('🚀 DOM loaded, setting up hamburger menu...');
-
-            const hamburger = document.querySelector('.hamburger');
-            const navMenu = document.querySelector('.nav-menu');
-
-            console.log('Hamburger:', hamburger);
-            console.log('Nav Menu:', navMenu);
-
-            if (hamburger && navMenu) {
-                console.log('✅ Elements found, adding click handler...');
-
-                hamburger.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    console.log('🍔 Hamburger clicked!');
-
-                    // Toggle the active class
-                    navMenu.classList.toggle('active');
-                    hamburger.classList.toggle('active');
-
-                    // Prevent body scroll when menu is open
-                    if (navMenu.classList.contains('active')) {
-                        document.body.classList.add('menu-open');
-                        document.documentElement.classList.add('menu-open');
-                        console.log('📱 Menu is now OPEN');
-                    } else {
-                        document.body.classList.remove('menu-open');
-                        document.documentElement.classList.remove('menu-open');
-                        console.log('📱 Menu is now CLOSED');
-                    }
-                });
-
-                // Close menu when clicking nav links
-                const navLinks = document.querySelectorAll('.nav-menu li a');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', function () {
-                        navMenu.classList.remove('active');
-                        hamburger.classList.remove('active');
-                        document.body.classList.remove('menu-open');
-                        document.documentElement.classList.remove('menu-open');
-                        console.log('🔗 Menu closed by nav link');
-                    });
-                });
-
-                // Close menu when clicking outside
-                document.addEventListener('click', function (e) {
-                    if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
-                        navMenu.classList.remove('active');
-                        hamburger.classList.remove('active');
-                        document.body.classList.remove('menu-open');
-                        document.documentElement.classList.remove('menu-open');
-                    }
-                });
-
-                console.log('✅ Hamburger menu setup complete!');
-            } else {
-                console.error('❌ Hamburger or nav menu not found!');
-            }
-        });
-    </script>
 </body>
 
 </html>

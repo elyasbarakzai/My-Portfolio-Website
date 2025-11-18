@@ -85,6 +85,34 @@ nav {
     overflow-x: hidden;
 }
 
+/* Right side of navbar: subscribe button + hamburger */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-left,
+.nav-center,
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.nav-center {
+    flex: 1;
+    justify-content: center;
+}
+
+.nav-right {
+    gap: 15px;
+}
+
+.logo-link {
+    display: inline-flex;
+    align-items: center;
+}
+
 /* Hamburger Menu */
 .hamburger {
     display: none;
@@ -92,9 +120,9 @@ nav {
     cursor: pointer;
     z-index: 1001;
     padding: 12px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
     position: relative;
@@ -102,6 +130,7 @@ nav {
     min-height: 50px;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
 }
 
 .hamburger:hover {
@@ -111,24 +140,26 @@ nav {
 }
 
 .hamburger.active {
-    background: rgba(255, 0, 0, 0.1);
-    border-color: rgba(255, 0, 0, 0.3);
-    transform: scale(1.05);
+    background: rgba(255, 0, 0, 0.33);
+    border-color: rgba(255, 0, 0, 0.4);
+    transform: scale(1.08) rotate(0deg);
+    box-shadow: 0 15px 30px rgba(255, 0, 0, 0.25);
 }
 
 .bar {
-    width: 25px;
-    height: 3px;
-    background-color: white;
+    width: 28px;
+    height: 2.5px;
+    background-color: #ffffff;
     margin: 3px 0;
-    transition: all 0.3s ease;
-    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.2s ease, background-color 0.25s ease;
+    border-radius: 999px;
     display: block;
 }
 
 .hamburger.active .bar:nth-child(1) {
-    transform: translateY(6px) rotate(45deg);
-    background-color: #FF0000;
+    transform: translateY(8px) rotate(45deg);
+    background-color: #ffffff;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
 }
 
 .hamburger.active .bar:nth-child(2) {
@@ -137,41 +168,18 @@ nav {
 }
 
 .hamburger.active .bar:nth-child(3) {
-    transform: translateY(-6px) rotate(-45deg);
-    background-color: #FF0000;
+    transform: translateY(-8px) rotate(-45deg);
+    background-color: #ffffff;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
 }
 
 /* Navigation Menu */
 .nav-menu {
-    display: block;
+    display: flex;
     align-items: center;
     list-style: none;
     margin: 0;
     padding: 0;
-}
-
-/* Ensure navbar is always visible on all screen sizes */
-@media screen and (max-width: 767px) {
-    .nav-menu {
-        display: block;
-        position: fixed;
-        right: -300px;
-        top: 80px;
-        flex-direction: column;
-        background-color: rgba(25, 25, 25, 0.8);
-        width: 250px;
-        text-align: center;
-        transition: right 0.3s ease;
-        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.3);
-        backdrop-filter: blur(10px);
-        padding: 20px;
-        border-radius: 15px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        z-index: 1000;
-        overflow: hidden;
-        max-height: calc(100vh - 160px);
-        contain: layout style paint;
-    }
 }
 
 .nav-menu li {
@@ -194,21 +202,108 @@ nav {
     transform: translateY(-2px);
 }
 
+/* Switch to hamburger navigation on medium screens */
+@media screen and (max-width: 1186px) {
+
+    /* Show hamburger & hide menu by default */
+    .hamburger {
+        display: flex !important;
+        visibility: visible;
+        opacity: 1;
+        padding: 10px;
+        min-width: 44px;
+        min-height: 44px;
+        border: none;
+        outline: none;
+    }
+
+    .hamburger .bar {
+        width: 22px;
+    }
+
+    .nav-menu {
+        display: none;
+        position: fixed;
+        top: 120px;
+        right: 4%;
+        width: min(320px, 80vw);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 18px 16px 18px;
+        background: rgba(10, 10, 10, 0.97);
+        border-radius: 24px;
+        box-shadow: 0 25px 45px rgba(0, 0, 0, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        z-index: 1200;
+        backdrop-filter: blur(12px);
+        transform: translateY(-12px) scale(0.98);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .nav-menu::before {
+        content: '';
+        position: absolute;
+        top: -8px;
+        right: 32px;
+        width: 16px;
+        height: 16px;
+        background: rgba(10, 10, 10, 0.97);
+        border-left: 1px solid rgba(255, 255, 255, 0.08);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        transform: rotate(45deg);
+        z-index: -1;
+    }
+
+    .nav-menu.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+    }
+
+    .nav-menu li {
+        list-style: none;
+        display: block;
+    }
+
+    .nav-menu li a {
+        display: block;
+        width: 100%;
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        padding: 12px 18px;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.02);
+        transition: all 0.3s ease;
+    }
+
+    .nav-menu li a:hover {
+        color: #ffbcbc;
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+    }
+
+    .nav-actions .btn {
+        white-space: nowrap;
+    }
+}
+
 .logo {
     color: white;
     font-size: 30px;
     letter-spacing: 1px;
-    cursor: pointer;
     font-family: cursive;
 }
 
-.span-logo {
-    font-family: math;
-    font-size: 38px;
-}
-
-span {
-    color: red;
+.logo {
+    width: 60px;
+    height: 60px;
 }
 
 nav ul li {
@@ -241,6 +336,28 @@ nav ul li a:hover {
     font-weight: bold;
     padding: 10px 25px;
     border-radius: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    animation: subscribePulse 2.2s ease-in-out infinite;
+}
+
+.btn:hover {
+    background: transparent;
+    border-color: red;
+    transform: translateY(-2px) scale(1.03);
+}
+
+@keyframes subscribePulse {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-1px) scale(1.05);
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+    }
 }
 
 .content {
@@ -355,10 +472,6 @@ h4 {
 
 /* Desktop (992px to 1199px) */
 @media screen and (max-width: 1199px) {
-    .nav-menu {
-        display: flex;
-    }
-
     .content h1 {
         font-size: 60px;
     }
@@ -374,10 +487,6 @@ h4 {
 
 /* Tablet (768px to 991px) */
 @media screen and (max-width: 991px) {
-    .nav-menu {
-        display: flex;
-    }
-
     nav {
         padding-left: 5%;
         padding-right: 5%;
@@ -443,101 +552,6 @@ h4 {
         width: 100%;
         max-width: 100vw;
         overflow-x: hidden;
-    }
-
-    /* Navigation */
-    .hamburger {
-        display: flex !important;
-        visibility: visible;
-        opacity: 1;
-    }
-
-    .nav-menu {
-        position: fixed;
-        right: -300px;
-        top: 80px;
-        flex-direction: column;
-        background-color: rgba(25, 25, 25, 0.8);
-        width: 250px;
-        text-align: center;
-        transition: right 0.3s ease;
-        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.3);
-        backdrop-filter: blur(10px);
-        padding: 20px;
-        border-radius: 15px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        z-index: 1000;
-        overflow: hidden;
-        max-height: calc(100vh - 160px);
-        contain: layout style paint;
-    }
-
-    .nav-menu.active {
-        right: 20px !important;
-        animation: slideInRight 0.3s ease-out;
-    }
-
-    @keyframes slideInRight {
-        from {
-            right: -300px;
-        }
-
-        to {
-            right: 20px;
-        }
-    }
-
-    .nav-menu li {
-        margin: 8px 0;
-        list-style: none;
-    }
-
-
-    .nav-menu li a {
-        color: white;
-        text-decoration: none;
-        font-size: 16px;
-        padding: 12px 20px;
-        display: block;
-        width: 100%;
-        transition: all 0.3s ease;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .nav-menu li a:hover {
-        color: #FF0000;
-        background: rgba(255, 0, 0, 0.1);
-        border-color: rgba(255, 0, 0, 0.3);
-        transform: translateY(-2px);
-    }
-
-    /* Remove scroll effect from Subscribe button in mobile menu */
-    .nav-menu li .btn {
-        background: #FF0000;
-        color: white;
-        text-decoration: none;
-        border: 2px solid transparent;
-        font-weight: bold;
-        padding: 12px 20px;
-        border-radius: 25px;
-        transition: all 0.3s ease;
-        display: block;
-        text-align: center;
-        margin-top: 10px;
-        overflow: hidden;
-    }
-
-    .nav-menu li .btn:hover {
-        background: transparent;
-        border: 2px solid #FF0000;
-        color: #FF0000;
-        transform: none;
-    }
-
-    .btn {
-        display: none;
     }
 
     /* Hero Section */
